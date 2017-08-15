@@ -1,0 +1,81 @@
+﻿<UserControl
+    x:Class="Drag_Drop_CalibrunMicro.Views.DragDropView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:micro="using:Caliburn.Micro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Name="categoryCollectionViewSource" IsSourceGrouped="True" ItemsPath="BookList"/>
+        <CollectionViewSource x:Name="bookCollectionViewSource"/>
+
+        <DataTemplate x:Key="categoryItemTemplate">
+            <StackPanel Orientation="Vertical" Margin="0" HorizontalAlignment="Left" Width="200">
+                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Author}" />
+                <TextBlock Text="{Binding Price}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="categoryItemPanelTemplate">
+            <StackPanel Orientation="Horizontal"></StackPanel>
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="contentRoot" Margin="100,20,100,20">
+            <!-- original -->
+            <!--<GridView x:Name="ItemsByCategory"
+                                  ItemsSource="{Binding Source={StaticResource categoryCollectionViewSource}, Mode=TwoWay}"
+                                  Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                                  ItemTemplate="{StaticResource categoryItemTemplate}"
+                                  ItemsPanel="{StaticResource categoryItemPanelTemplate}"   
+                                  SelectionMode="Multiple" IsSwipeEnabled="True"
+                                  HorizontalAlignment="Left"
+                                  CanDragItems="True"
+                                  DragItemsStarting="ItemsByCategory_DragItemsStarting">  -->          
+            <GridView x:Name="ItemsByCategory"
+                                  ItemsSource="{Binding categoryCollectionViewSource, Mode=TwoWay}"
+                                  Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                                  ItemTemplate="{StaticResource categoryItemTemplate}"
+                                  ItemsPanel="{StaticResource categoryItemPanelTemplate}"   
+                                  SelectionMode="Multiple" IsSwipeEnabled="True"
+                                  HorizontalAlignment="Left"
+                                  CanDragItems="True"
+                                  DragItemsStarting="ItemsByCategory_DragItemsStarting">
+                <GridView.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True">
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}" Margin="0">
+                                    <TextBlock Text="{Binding Name}" Foreground="Gray" FontSize="25" Margin="5"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="GroupItem">
+                                <Setter Property="FontFamily" Value="Segoe UI" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                <Setter Property="VerticalContentAlignment" Value="Top" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="TabNavigation" Value="Local" />
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid Drop="VariableSizedWrapGrid_Drop" AllowDrop="True" DragOver="VariableSizedWrapGrid_DragOver" />
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </GridView.GroupStyle>
+            </GridView>
+        </Grid>
+    </Grid>
+
+</UserControl>
+
+
